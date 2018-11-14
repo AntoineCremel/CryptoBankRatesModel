@@ -1,0 +1,2 @@
+from mesa import Agent
+
