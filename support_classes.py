@@ -11,10 +11,11 @@ class Loan():
 
 	"""
 	def __init__(self, start_date, end_date,
-				 debtor, interest_rate, value):
+				 debtor, interest_rate, value, loan_type):
 		# Start by checking the compatibility of the parameters
 		self.start_date = start_date
 		self.end_date = end_date
 		self.debtor = debtor
 		self.interest_rate = interest_rate
 		self.value = value
+		self.type = loan_type
