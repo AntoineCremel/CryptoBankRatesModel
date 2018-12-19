@@ -77,4 +77,4 @@ class WorldModel(Model):
 
 
 def agent1_liquidity(model):
-	return model.scheduler.agents[1]
+	return model.scheduler.agents[1].liquidity

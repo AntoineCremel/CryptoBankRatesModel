@@ -66,7 +66,7 @@ class Household(FinanceAgent):
 
 		if self.model.monthpassed:
 			# Receive salary
-			pass
+			self.hours_worked_this_month = 0
 		if self.model.daypassed:
 			# Reset every daily value
 			self.hours_worked_today = 0
