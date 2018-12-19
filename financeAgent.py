@@ -2,9 +2,9 @@
 Define the main class from which all agents will inherit
 
 Each possible agent will come from this one
+We assume only banks can give loans
 """
 from mesa import Agent, Model
-from support_classes import Loan
 import random
 
 class FinanceAgent(Agent):
@@ -19,23 +19,12 @@ class FinanceAgent(Agent):
 
 		self.liquidity = 0 # Available cash
 		self.debt = 0 # Sum of money borrowed
-		self.loans = [] # Array of loans given
 
 	def step(self):
 		"""
 		This function will implement what the agent will do on
 		each step of the simulation.
 		"""
-		if self.model.monthpassed:
-			self.payLoans()
-
-	def payLoans(self):
-		"""
-		This function implements the payment of the regular due of
-		the loan by self
-		"""
-		# This function will read all the loans of self to trigger payment
-		# of monthly dues
 		pass
 
 class Household(FinanceAgent):
@@ -52,7 +41,7 @@ class Household(FinanceAgent):
 		self.deposit = 1000
 		self.n_work_hours_expected = 0
 		self.hour_wage = 10
-		self.n_adults = 1
+		self.n_adults = 1 #Number of adults capable of working
 
 	def step(self):
 		"""
@@ -73,5 +62,26 @@ class Household(FinanceAgent):
 
 	# Helper functions
 	def work_an_hour(self):
-		self.hours_worked_today += 1
-		self.hours_worked_this_month += 1
+		self.hours_worked_today += self.n_adults
+		self.hours_worked_this_month += self.n_adults
+
+	def get_account(self, bank):
+		"""
+		Return how much money this household has in bank n_bank
+		"""
+		if bank == self.bank_n:
+			return self.deposit
+
+	def change_account(self, bank, amount, overdraft_allowed=False):
+		"""
+		Withdraw or add money to the account of this household with this bank.
+		"""
+		if bank != self.bank_n:
+			raise AttributeError("Having accounts in several different banks\
+				is not implemented")
+
+		# Check that the client has enough
+		if amount < 0 and -amount > self.deposit and !overdraft_allowed:
+			raise ValueError("Overdraft is not allowed")
+
+		self.deposit += amount
