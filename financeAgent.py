@@ -53,6 +53,8 @@ class Household(FinanceAgent):
 			# Increment amount of worked hours
 			self.work_an_hour()
 
+		self.receive_salary()
+
 		if self.model.monthpassed:
 			# Receive salary
 			self.hours_worked_this_month = 0
@@ -72,7 +74,7 @@ class Household(FinanceAgent):
 		if bank == self.bank_n:
 			return self.deposit
 
-	def change_account(self, bank, amount, overdraft_allowed=False):
+	def charge_account(self, bank, amount, overdraft_allowed=False):
 		"""
 		Withdraw or add money to the account of this household with this bank.
 		"""
@@ -81,7 +83,13 @@ class Household(FinanceAgent):
 				is not implemented")
 
 		# Check that the client has enough
-		if amount < 0 and -amount > self.deposit and !overdraft_allowed:
+		if amount < 0 and -amount > self.deposit and not overdraft_allowed:
 			raise ValueError("Overdraft is not allowed")
 
 		self.deposit += amount
+
+	def receive_salary(self):
+		"""
+		"""
+		if self.model.monthpassed:
+			self.deposit += self.hours_worked_this_month * self.hour_wage

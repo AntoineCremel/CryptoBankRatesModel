@@ -37,8 +37,8 @@ class Loan():
 			the end date
 			"""
 			if current_date >= end_date:
-				return value + (interest_rate/100) * value,
-					self.debtor,
+				return value + (interest_rate/100) * value,\
+					self.debtor,\
 					self.true
 
 			else:

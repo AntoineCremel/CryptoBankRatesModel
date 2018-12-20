@@ -44,17 +44,17 @@ class Bank(FinanceAgent):
 			# Find the amount due
 			due, debtor, end = loan.get_payment(self.model.current_date_time)
 			# Check that any amount of money is due
-			if !due:
+			if not due:
 				return
 			# If the debtor is a household
 			if isinstance(self.model.scheduler.agents[debtor], Household):
 				try:
-					self.model.scheduler.agents[debtor].change_account(self.unique_id, due, True)
+					self.model.scheduler.agents[debtor].charge_account(self.unique_id, due, True)
 					# Give liquidity to the bank
 					self.liquidity += due
 					# If the loan if fully repaid, delete it
 					loans_to_delete.add(loan)
-				except AttributeError, ValueError:
+				except :
 					# Couldn't withdraw for some reason, try to get from Household liquidity
 					if self.model.scheduler.agents[debtor].liquidity >= due:
 						self.model.scheduler.agents[debtor].liquidity -= due
