@@ -32,6 +32,7 @@ class FinanceAgent(Agent):
 		This function implements the payment of the regular due of
 		the loan by self
 		"""
+		pass
 
 
 class Household(FinanceAgent):
