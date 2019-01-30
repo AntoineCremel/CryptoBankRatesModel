@@ -27,7 +27,7 @@ class WorldModel(Model):
 		# Attributes related to time
 		self.start_datetime = datetime(2005, 1, 1, 0, 0, 0, tzinfo=None)
 		self.current_datetime = self.start_datetime
-		self.step_interval = timedelta(hours=1)
+		self.step_interval = timedelta(days=30)
 
 		self.n_banks = n_agents['banks']
 		self.n_households = n_agents['households']

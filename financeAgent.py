@@ -41,7 +41,7 @@ class Household(FinanceAgent):
 		self.deposit = 1000
 		self.n_work_hours_expected = 0
 		self.hour_wage = 10
-		self.n_adults = 1 #Number of adults capable of working
+		self.n_adults = 1 #Number of adults capable of working in the household
 
 	def step(self):
 		"""
