@@ -4,6 +4,7 @@ from financeAgent import Household
 from banks import Bank
 from mesa.datacollection import DataCollector
 from datetime import datetime, timedelta
+import support_classes
 
 class WorldModel(Model):
 	"""
@@ -27,7 +28,7 @@ class WorldModel(Model):
 		# Attributes related to time
 		self.start_datetime = datetime(2005, 1, 1, 0, 0, 0, tzinfo=None)
 		self.current_datetime = self.start_datetime
-		self.step_interval = timedelta(days=30)
+		self.step_interval = "month"
 
 		self.n_banks = n_agents['banks']
 		self.n_households = n_agents['households']
@@ -47,7 +48,7 @@ class WorldModel(Model):
 		# Create the data collector
 		self.datacollector = DataCollector(
 			model_reporters = {"Agent1_liquidity": agent1_liquidity,
-							"Agent1_deposti": agent1_deposit})
+							"Agent1_deposit": agent1_deposit})
 
 		self.running = True
 
@@ -68,14 +69,13 @@ class WorldModel(Model):
 		"""
 		before_datetime = self.current_datetime
 		# Update the current_datetime
-		self.current_datetime += self.step_interval
+		self.current_datetime = support_classes.addMonth(self.current_datetime)
 		# Check if a new day passed
 		self.time_tick(before_datetime)
 
 		# Take the steps in the model
 		self.datacollector.collect(self)
 		self.scheduler.step()
-
 
 def agent1_liquidity(model):
 	return model.scheduler.agents[1].liquidity

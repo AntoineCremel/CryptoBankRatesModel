@@ -39,7 +39,7 @@ class Household(FinanceAgent):
 		self.bank_n = random.randint(0, model.n_banks-1)
 
 		self.deposit = 1000
-		self.n_work_hours_expected = 7
+		self.n_work_hours_expected = 35
 		self.hour_wage = 10
 		self.n_adults = 1 #Number of adults capable of working in the household
 
@@ -48,10 +48,9 @@ class Household(FinanceAgent):
 		This function defines what a household will do on each
 		step
 		"""
-		# If the household still wants to work, add work hours
-		if self.hours_worked_this_month < self.n_work_hours_expected:
-			# Increment amount of worked hours
-			self.work_an_hour()
+		# For now we consider that each household does exactly as many
+		# work hours as it expects every month.
+		self.hours_worked_this_month = self.n_work_hours_expected
 
 		self.receive_salary()
 
@@ -63,10 +62,6 @@ class Household(FinanceAgent):
 			self.hours_worked_today = 0
 
 	# Helper functions
-	def work_an_hour(self):
-		self.hours_worked_today += self.n_adults
-		self.hours_worked_this_month += self.n_adults
-
 	def get_account(self, bank):
 		"""
 		Return how much money this household has in bank n_bank

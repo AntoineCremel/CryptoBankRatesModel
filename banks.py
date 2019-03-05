@@ -62,5 +62,5 @@ class Bank(FinanceAgent):
 						raise Exception("Trying to get a household to repay a lona they can't afford.\n"+
 							"Not implemented")
 
-		for loan in loan_to_delete:
+		for loan in loans_to_delete:
 			self.loans.remove(loan)

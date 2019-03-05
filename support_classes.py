@@ -2,6 +2,7 @@
 Define the support classes needed in this program
 """
 import datetime
+import calendar
 
 class Loan():
 	"""
@@ -43,3 +44,14 @@ class Loan():
 
 			else:
 				return None, None, False
+
+def addMonth(source, n_months=1):
+	"""
+	This function takes a datetime as input and returns a date n_months
+	later than datetime
+	"""
+	month = source.month - 1 + n_months
+	year = source.year + month // 12
+	month = month % 12 + 1
+	day = min(source.day, calendar.monthrange(year, month)[1])
+	return datetime.date(year, month, day)
