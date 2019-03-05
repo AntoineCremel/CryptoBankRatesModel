@@ -83,3 +83,6 @@ def agent1_liquidity(model):
 def agent1_deposit(model):
 	return model.scheduler.agents[1].deposit
 
+def agent0_liquiduty(model):
+	return model.scheduler.agents[0].liquidity
+
