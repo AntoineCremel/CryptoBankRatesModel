@@ -45,22 +45,22 @@ class Bank(FinanceAgent):
 			if not due:
 				return
 			# If the debtor is a household
-			if isinstance(self.model.scheduler.agents[debtor], Household):
-				try:
-					self.model.scheduler.agents[debtor].charge_account(self.unique_id, due, True)
-					# Give liquidity to the bank
-					self.liquidity += due
-					# If the loan if fully repaid, delete it
-					loans_to_delete.add(loan)
-				except :
-					# Couldn't withdraw for some reason, try to get from Household liquidity
-					if self.model.scheduler.agents[debtor].liquidity >= due:
-						self.model.scheduler.agents[debtor].liquidity -= due
+			#if isinstance(self.model.scheduler.agents[debtor], Household):
+			try:
+				self.model.scheduler.agents[debtor].charge_account(self.unique_id, due, True)
+				# Give liquidity to the bank
+				self.liquidity += due
+				# If the loan if fully repaid, delete it
+				loans_to_delete.add(loan)
+			except :
+				# Couldn't withdraw for some reason, try to get from Household liquidity
+				if self.model.scheduler.agents[debtor].liquidity >= due:
+					self.model.scheduler.agents[debtor].liquidity -= due
 
-					# Otherwise make a new loan
-					else:
-						raise Exception("Trying to get a household to repay a lona they can't afford.\n"+
-							"Not implemented")
+				# Otherwise make a new loan
+				else:
+					raise Exception("Trying to get a household to repay a lona they can't afford.\n"+
+						"Not implemented")
 
 		for loan in loans_to_delete:
 			self.loans.remove(loan)

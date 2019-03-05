@@ -45,6 +45,8 @@ class Loan():
 			else:
 				return None, None, False
 
+
+###### Helper functions ######
 def addMonth(source, n_months=1):
 	"""
 	This function takes a datetime as input and returns a date n_months

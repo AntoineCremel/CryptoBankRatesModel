@@ -94,7 +94,7 @@ class Household(FinanceAgent):
 		if amount < 0 and -amount > self.deposit and not overdraft_allowed:
 			raise ValueError("Overdraft is not allowed")
 
-		self.deposit += amount
+		addDeposit(-1 * amount)
 
 	def receive_salary(self):
 		"""
