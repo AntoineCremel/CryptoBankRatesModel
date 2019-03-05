@@ -46,7 +46,8 @@ class WorldModel(Model):
 
 		# Create the data collector
 		self.datacollector = DataCollector(
-			model_reporters = {"Agent1_liquidity": agent1_liquidity})
+			model_reporters = {"Agent1_liquidity": agent1_liquidity,
+							"Agent1_deposti": agent1_deposit})
 
 		self.running = True
 
@@ -78,3 +79,7 @@ class WorldModel(Model):
 
 def agent1_liquidity(model):
 	return model.scheduler.agents[1].liquidity
+
+def agent1_deposit(model):
+	return model.scheduler.agents[1].deposit
+

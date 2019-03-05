@@ -39,7 +39,7 @@ class Household(FinanceAgent):
 		self.bank_n = random.randint(0, model.n_banks-1)
 
 		self.deposit = 1000
-		self.n_work_hours_expected = 0
+		self.n_work_hours_expected = 7
 		self.hour_wage = 10
 		self.n_adults = 1 #Number of adults capable of working in the household
 
@@ -49,7 +49,7 @@ class Household(FinanceAgent):
 		step
 		"""
 		# If the household still wants to work, add work hours
-		if self.hours_worked_today < self.n_work_hours_expected:
+		if self.hours_worked_this_month < self.n_work_hours_expected:
 			# Increment amount of worked hours
 			self.work_an_hour()
 
