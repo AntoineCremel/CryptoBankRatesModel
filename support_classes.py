@@ -57,4 +57,4 @@ def addMonth(source, n_months=1):
 	return datetime.date(year, month, day)
 
 def test():
-    pass
+    return 3
