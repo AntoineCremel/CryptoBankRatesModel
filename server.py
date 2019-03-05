@@ -11,6 +11,11 @@ deposit_agent1_chart = ChartModule([{"Label" : "Agent1_deposit",
 					"Color": "Black"}],
 					data_collector_name="datacollector")
 
+liquidity_agent0_chart = ChartModule([{"Label" : "Bank liquidity",
+					"Color": "Black"}],
+					data_collector_name="datacollector")
+
 server = ModularServer(WorldModel,\
-	[liquidity_agent1_chart, deposit_agent1_chart], "World model",
+	[liquidity_agent1_chart, deposit_agent1_chart, liquidity_agent0_chart],\
+	"World model",
 	{"n_agents": {"banks": 1, "households": 1}})

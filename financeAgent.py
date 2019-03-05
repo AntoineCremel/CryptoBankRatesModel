@@ -19,6 +19,10 @@ class FinanceAgent(Agent):
 
 		self.liquidity = 0 # Available cash
 		self.debt = 0 # Sum of money borrowed
+		self.deposit = 0
+
+		# Unique Id of the bank to which belongs
+		self.bank_n = random.randint(0, model.n_banks-1)
 
 	def step(self):
 		"""
@@ -26,6 +30,18 @@ class FinanceAgent(Agent):
 		each step of the simulation.
 		"""
 		pass
+
+	def setDeposit(self, new_deposit):
+		"""
+		This function is used to change the amount of money this agent has
+		deposited on his bank account
+		"""
+		self.model.scheduler.agents[self.bank_n].liquidity +=\
+			new_deposit - self.deposit
+		self.deposit = new_deposit
+
+	def addDeposit(self, amount):
+		self.setDeposit(self.deposit + amount)
 
 class Household(FinanceAgent):
 	def __init__(self, unique_id, model):
@@ -35,13 +51,10 @@ class Household(FinanceAgent):
 		self.hours_worked_today = 0
 		self.hours_worked_this_month = 0
 
-		# Unique Id of the bank to which belongs
-		self.bank_n = random.randint(0, model.n_banks-1)
-
-		self.deposit = 1000
 		self.n_work_hours_expected = 35
 		self.hour_wage = 10
 		self.n_adults = 1 #Number of adults capable of working in the household
+		self.setDeposit(1000)
 
 	def step(self):
 		"""
@@ -87,4 +100,5 @@ class Household(FinanceAgent):
 		"""
 		"""
 		if self.model.monthpassed:
-			self.deposit += self.hours_worked_this_month * self.hour_wage
+			self.addDeposit(self.hours_worked_this_month * self.hour_wage)
+
