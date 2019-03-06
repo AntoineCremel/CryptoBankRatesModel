@@ -40,10 +40,11 @@ class FinanceAgent(Agent):
 				object.__setattr__(self, name, value)
 
 			except IndexError:
-				# If the bank has not been defined yet, we do not
-				# do anything. We don't want this little guy to
-				# have a deposit that is not represented in any bank
-				print("Index error in setattr deposit. Carrying on")
+				# If the bank has not been defined yet, we have to set the 
+				# attribute to 0, because otherwise this agent would have
+				# a deposit that is not contained in any banks liquidity
+				print("Agent {} has no bank yet. Defaulting his deposit to 0.".format(self.unique_id))
+				object.__setattr__(self, name, 0)
 				pass
 
 			except AttributeError:

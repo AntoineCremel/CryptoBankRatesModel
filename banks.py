@@ -23,20 +23,23 @@ class Bank(FinanceAgent):
 
 			return total_loaned
 
-		if name == "net_worth":
-			"""
-			For banks, we consider that deposit made into them is negative to the total
-			networh cf Monetary Economics Table 2.4
-			"""
+		if name == "total_deposits":
 			total_deposits = 0
 			for agent in self.model.scheduler.agents :
 				if agent.bank_n == self.unique_id:
 					# If the bank number of the agent is equal to the id
 					# of this bank, then the deposits of this agent is contained in
 					# this bank
-					total_deposits += agent.deposits
+					total_deposits += agent.deposit
+			return total_deposits
 
-			return self.liquidity - total_deposits + self.total_loaned
+
+		if name == "net_worth":
+			"""
+			For banks, we consider that deposit made into them is negative to the total
+			networh cf Monetary Economics Table 2.4
+			"""
+			return self.liquidity - self.total_deposits + self.total_loaned
 		else:
 			super().__getattr__(name)
 

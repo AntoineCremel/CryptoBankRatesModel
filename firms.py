@@ -19,6 +19,6 @@ class Firms(FinanceAgent):
 
 	def give_salaries(self):
 		"""
-		This function shu
+		This function should give salaries to all the employees of the company
 		"""
 		pass # Take off the word pass when completing the function

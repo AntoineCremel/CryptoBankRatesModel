@@ -39,6 +39,7 @@ class WorldModel(Model):
 		# Create the required number of each agent
 		for i in range(self.n_banks):
 			a = Bank(i, self)
+			a.liquidity = 1000
 			self.scheduler.add(a)
 
 		for i in range(self.n_households):
@@ -50,7 +51,8 @@ class WorldModel(Model):
 			model_reporters = {"Household liquidity": agent1_liquidity,
 							"Household deposit": agent1_deposit,
 							"Bank liquidity": agent0_liquidity,
-							"Networth of agent 1" : agent1_netWorth})
+							"Networth of household": agent1_netWorth,
+							"Networth of bank": agent0_netWorth})
 
 		self.running = True
 
@@ -79,6 +81,8 @@ class WorldModel(Model):
 		self.datacollector.collect(self)
 		self.scheduler.step()
 
+
+# Those functions are used to create graphs for the model
 def agent1_liquidity(model):
 	return model.scheduler.agents[1].liquidity
 
@@ -90,3 +94,6 @@ def agent0_liquidity(model):
 
 def agent1_netWorth(model):
 	return model.scheduler.agents[1].net_worth
+
+def agent0_netWorth(model):
+	return model.scheduler.agents[0].net_worth

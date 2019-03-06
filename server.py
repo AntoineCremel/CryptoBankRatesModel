@@ -15,11 +15,13 @@ liquidity_agent0_chart = ChartModule([{"Label" : "Bank liquidity",
 					"Color": "Black"}],
 					data_collector_name="datacollector")
 
-net_worth_agent1_chart = ChartModule([{"Label": "Networth of agent 1",
-					"Color": "Black"}],
+net_worth_agents_chart = ChartModule([{"Label": "Networth of household",
+					"Color": "Black"},
+					{"Label": "Networth of bank",
+					"Color": "Red"}],
 					data_collector_name="datacollector")
 
 server = ModularServer(WorldModel,
-	[net_worth_agent1_chart],
+	[net_worth_agents_chart, liquidity_agent0_chart],
 	"World model",
 	{"n_agents": {"banks": 1, "households": 1}})
