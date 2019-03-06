@@ -2,15 +2,43 @@
 This file will contain the definition of all
 of the banking classes
 """
-from mesa import Agent
-from financeAgent import FinanceAgent, Household
+from financeAgent import FinanceAgent
 from support_classes import Loan
-import inspect
 
 class Bank(FinanceAgent):
 	def __init__(self, unique_id, model):
 		super().__init__(unique_id, model)
 		self.loans = [] # Array of loans given
+
+	def __getattr__(self, name):
+		"""
+		Contains the definition of attributes which are dinamically represented
+		"""
+		if name == "total_loaned":
+			### Wait for REDA's work on loans
+			### the current function is not compatible with mensualities
+			total_loaned = 0
+			for loan in self.loans:
+				totatl_loaned += loan.value + loan.value * loan.interest_rate
+
+			return total_loaned
+
+		if name == "net_worth":
+			"""
+			For banks, we consider that deposit made into them is negative to the total
+			networh cf Monetary Economics Table 2.4
+			"""
+			total_deposits = 0
+			for agent in self.model.scheduler.agents :
+				if agent.bank_n == self.unique_id:
+					# If the bank number of the agent is equal to the id
+					# of this bank, then the deposits of this agent is contained in
+					# this bank
+					total_deposits += agent.deposits
+
+			return self.liquidity - total_deposits + self.total_loaned
+		else:
+			super().__getattr__(name)
 
 	def step(self):
 		"""

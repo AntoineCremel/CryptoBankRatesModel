@@ -1,6 +1,6 @@
 from mesa import Model
 from mesa.time import RandomActivation
-from financeAgent import Household
+from household import Household
 from banks import Bank
 from mesa.datacollection import DataCollector
 from datetime import datetime, timedelta
@@ -47,9 +47,10 @@ class WorldModel(Model):
 
 		# Create the data collector
 		self.datacollector = DataCollector(
-			model_reporters = {"Agent1_liquidity": agent1_liquidity,
-							"Agent1_deposit": agent1_deposit,
-							"Bank liquidity": agent0_liquidity})
+			model_reporters = {"Household liquidity": agent1_liquidity,
+							"Household deposit": agent1_deposit,
+							"Bank liquidity": agent0_liquidity,
+							"Networth of agent 1" : agent1_netWorth})
 
 		self.running = True
 
@@ -87,3 +88,5 @@ def agent1_deposit(model):
 def agent0_liquidity(model):
 	return model.scheduler.agents[0].liquidity
 
+def agent1_netWorth(model):
+	return model.scheduler.agents[1].net_worth
