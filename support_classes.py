@@ -14,12 +14,17 @@ class Loan():
 	def __init__(self, start_date, end_date,
 				 debtor, interest_rate, value, loan_type="basic"):
 		# Start by checking the compatibility of the parameters
+        
 		self.start_date = start_date
 		self.end_date = end_date
 		self.debtor = debtor
-		self.interest_rate = interest_rate # in percentage
+		self.interest_rate = interest_rate/100 # in percentage
 		self.value = value
 		self.type = loan_type
+        self.nb_month = ((end_date.year - start_date.year)*12)+end_date.month - start_date.month 
+        self.mensuality = value/nb_months + ((value/nb_month)*interest_rate)
+        self.remaining_val_with_interest = mensuality*nb_month
+        
 
 	def get_payment(self, current_date):
 		"""
@@ -28,22 +33,40 @@ class Loan():
 		Return : amount of money due, debtor and end.
 			- Amount of money due is the amount the debtor should pay to
 			the owner of the loan
+            - 
 			- Debtor is the number of the agent who should pay this amount
 			- end is a boolean which says wether or not this loan can be deleted
 				from the database
 		"""
 		if self.type == "basic":
+            if "verifier que 10% du montant de la variable value correspondant est egal ou superieur au salaire du houesehold qui contracte le pret"
 			"""
 			In the case of a basic loan, everything is paid at once at
 			the end date
 			"""
 			if current_date >= end_date:
-				return value + (interest_rate/100) * value,\
-					self.debtor,\
-					self.true
+                
+				return value + (interest_rate) * value,
+					self.debtor,
+					True
 
-			else:
-				return None, None, False
+			
+           
+        if self.type == "household loan":
+            while current_date <= end_date:
+               
+                    return self.remainig_val_with_interest -= mensuality
+                           self.debtor,
+                           False
+                    
+                else:   
+                    
+                    return self.remainig_val_with_interest,
+                           self.debtor,
+                           True
+                    
+                else:
+                    return None, None, False       
 
 
 ###### Helper functions ######
