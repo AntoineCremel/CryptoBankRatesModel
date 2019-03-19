@@ -17,8 +17,9 @@ class Household(FinanceAgent):
 		self.n_adults = 1 #Number of adults capable of working in the household
 		self.deposit = 1000
 		self.price_of_life = 100 # Price of basic standard monthly consumption
-		self.teta = 0.2 # tax rate default as definied in sim model
-        self.alpha1 = 0.6 # Propensity to consume out of income
+		self.alpha1 = 0.6 # Propensity to consume out of income
+		self.alpha2 = 0.4 # Propensity to consume out of wealth
+        
 
 	def step(self):
 		"""
@@ -31,7 +32,8 @@ class Household(FinanceAgent):
 
 		self.receive_salary()
 		self.monthly_consumption()
-
+		self.consumption()
+		self.consumption_demand()
 		if self.model.monthpassed:
 			# Receive salary
 			self.hours_worked_this_month = 0
@@ -51,22 +53,17 @@ class Household(FinanceAgent):
 		# later on, we will need to connect the consumption of a household with the
 		# income of production firms.
 		self.deposit -= self.price_of_life
-		
-	def taxes(self) :   
-		"""
-		Taxes are levied in a fixed proportion teta
-		"""
-		self.taxe = self.teta * self.deposit
-		
+        
 	def consumption(self) :     
 		"""
-		Households consume out of their disposable income
+		Households consume out of their disposable income 
 		"""
-		self.consumption1 = self.deposit - self.taxe 
+		self.disposable_income = self.deposit - self.price_of_life
 
-    def consumption_demand(self) :  
-        """
+	def consumption_demand(self) :  
+		"""
         Consumption goods demand by household
         """
-        self.consumption2 = self.alpha1 * self.deposit
+		self.consumptiond = self.alpha1 * self.disposable_income + self.alpha2 * self.deposit
         
+	
