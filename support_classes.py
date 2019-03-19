@@ -58,16 +58,9 @@ class Loan():
 			In the case of a basic loan, everything is paid at once at
 			the end date
 			"""
-<<<<<<< HEAD
-			if current_date >= end_date:
-				
-				return value + (interest_rate) * value,
-    					self.debtor,
-=======
 			if current_date == end_date:
 				return value + (interest_rate) * value,\
 					self.debtor,\
->>>>>>> b8811420c1eee77e32ee61c474b6adc8d20af18f
 					True
 
 			
