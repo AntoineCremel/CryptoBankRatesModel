@@ -9,7 +9,9 @@ class Firms(FinanceAgent):
 	def __init__(self, unique_id, model):
 		super().__init__(unique_id, model)
 
-		self.employees = [] # list of numbers indicating employees to the fir
+		self.employees = [] # list of numbers indicating employees to the firm
+		self.salaries = [] # list of salaries
+		self.deposit = 10000
 		### To complete : constructor of class firm
 
 	def step(self):
