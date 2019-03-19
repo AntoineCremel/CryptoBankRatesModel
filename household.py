@@ -31,9 +31,7 @@ class Household(FinanceAgent):
 
 		self.receive_salary()
 		self.monthly_consumption()
-		self.taxes()
-		self.consumption1()
-        self.consumption2()
+
 		if self.model.monthpassed:
 			# Receive salary
 			self.hours_worked_this_month = 0
@@ -65,7 +63,7 @@ class Household(FinanceAgent):
 		Households consume out of their disposable income
 		"""
 		self.consumption1 = self.deposit - self.taxe 
-        
+
     def consumption_demand(self) :  
         """
         Consumption goods demand by household
