@@ -48,17 +48,16 @@ class Loan():
 			- end is a boolean which says wether or not this loan can be deleted
 				from the database
 		"""
-		if self.type == "basic":
-			#if "verifier que 10% du montant de la variable value correspondant est egal ou superieur au salaire du houesehold qui contracte le pret"
+		if self.type == "basic loan":
 			"""
 			In the case of a basic loan, everything is paid at once at
 			the end date
 			"""
-			if current_date >= end_date:
+			if current_date == end_date:
 				
 				return value + (interest_rate) * value,
-					self.debtor,
-					True
+					   self.debtor,
+					   True
 
 			
 
@@ -76,7 +75,11 @@ class Loan():
 					   self.debtor,
 					   True
                     
-                
+        if self.type == "bank loan":
+			"""in the case of bank loan from 1 to 12 months"""
+			if current_date < end_date:
+				
+				
 		   
 		
 
