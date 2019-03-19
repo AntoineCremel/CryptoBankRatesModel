@@ -55,7 +55,7 @@ class Loan():
         if self.type == "household loan":
             while current_date <= end_date:
                
-                    return self.remainig_val_with_interest -= mensuality
+                    return self.remainig_val_with_interest -= mensuality,
                            self.debtor,
                            False
                     
