@@ -29,4 +29,4 @@ class Firms(FinanceAgent):
 		This function will generate consumption goods wchich can be bought
 		by households directly.
 		"""
-		self
+		pass

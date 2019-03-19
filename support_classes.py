@@ -18,12 +18,23 @@ class Loan():
 		self.start_date = start_date
 		self.end_date = end_date
 		self.debtor = debtor
-		self.interest_rate = interest_rate/100 # in percentage
+		self.interest_rate = interest_rate
 		self.value = value
 		self.type = loan_type
         self.nb_month = ((end_date.year - start_date.year)*12)+end_date.month - start_date.month 
         self.mensuality = value/nb_months + ((value/nb_month)*interest_rate)
         self.remaining_val_with_interest = mensuality*nb_month
+
+    def __getattr__(self, name):
+    	# Definition of dynamic variables
+    	if name=="total_val":
+    		return value + value * interest_rate
+
+    	else:
+    		super().__getattr__(name)
+
+    def __setattr__(self, name, value):
+    	pass
         
 
 	def get_payment(self, current_date):
@@ -39,7 +50,7 @@ class Loan():
 				from the database
 		"""
 		if self.type == "basic":
-            if "verifier que 10% du montant de la variable value correspondant est egal ou superieur au salaire du houesehold qui contracte le pret"
+            #if "verifier que 10% du montant de la variable value correspondant est egal ou superieur au salaire du houesehold qui contracte le pret"
 			"""
 			In the case of a basic loan, everything is paid at once at
 			the end date
