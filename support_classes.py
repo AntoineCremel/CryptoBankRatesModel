@@ -88,10 +88,11 @@ class Loan():
 			# Dans le cas où le prêt est entièrement payé
 			else:
 				return 0, self.debtor, True
-                    
-        if self.type == "bank loan":
+
+		if self.type == "bank loan":
 			"""in the case of bank loan from 1 to 12 months"""
 			if current_date < end_date:
+				pass
 				
 				
 
