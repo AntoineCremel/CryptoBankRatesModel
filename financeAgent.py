@@ -62,7 +62,7 @@ class FinanceAgent(Agent):
 		if name == "bank":
 			# This variable contains a pointer towards the bank
 			return self.model.scheduler.agents[self.bank_n]
-		if name == "debts":
+		elif name == "debts":
 			# loans contracted is the sum of all of the money this agent
 			#### IN THIS VERSION WE CONSIDER PEOPLE CAN ONLY HAVE DEBTS
 			# WITH THEIR MAIN BANK
@@ -74,8 +74,12 @@ class FinanceAgent(Agent):
 					total_debt += loan.value + loan.value * loan.interest_rate
 			return total_debt
 
-		if name == "net_worth":
-			return self.liquidity + self.tangible_assets + self.deposit 
+		elif name == "net_worth":
+			return self.liquidity + self.tangible_assets + self.deposit
+
+		elif name == "agents":
+			return self.model.scheduler.agents
+
 		else :
 			# If name is not one of the variable that we are trying to
 			# find then call the __getattr__ function of the mother class
@@ -99,3 +103,25 @@ class FinanceAgent(Agent):
 
 	def addDeposit(self, amount):
 		self.setDeposit(self.deposit + amount)
+
+	# Helper functions
+	def get_account(self, bank):
+		"""
+		Return how much money this household has in bank n_bank
+		"""
+		if bank == self.bank_n:
+			return self.deposit
+
+	def charge_account(self, bank, amount, overdraft_allowed=False):
+		"""
+		Withdraw or add money to the account of this household with this bank.
+		"""
+		if bank != self.bank_n:
+			raise AttributeError("Having accounts in several different banks\
+				is not implemented")
+
+		# Check that the client has enough
+		if amount < 0 and -amount > self.deposit and not overdraft_allowed:
+			raise ValueError("Overdraft is not allowed")
+
+		self.deposit -= amount

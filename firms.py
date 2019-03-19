@@ -9,6 +9,7 @@ class Firms(FinanceAgent):
 	def __init__(self, unique_id, model):
 		super().__init__(unique_id, model)
 
+		self.employees = [] # list of numbers indicating employees to the fir
 		### To complete : constructor of class firm
 
 	def step(self):
@@ -22,3 +23,10 @@ class Firms(FinanceAgent):
 		This function should give salaries to all the employees of the company
 		"""
 		pass # Take off the word pass when completing the function
+
+	def produce_goods(self):
+		"""
+		This function will generate consumption goods wchich can be bought
+		by households directly.
+		"""
+		pass
