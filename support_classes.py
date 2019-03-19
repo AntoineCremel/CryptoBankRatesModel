@@ -28,13 +28,18 @@ class Loan():
 	def __getattr__(self, name):
 		# Definition of dynamic variables
 		if name=="total_val":
-			return value + value * interest_rate
+			return value * (1 + interest_rate)
 
 		else:
 			super().__getattr__(name)
 
 	def set_total_val(self, value):
 		self.value = value + value * interest_rate
+	def decrease_total_val(self, value):
+		"""
+		value is an amount of the loan that has been repaid
+		"""
+		self.value = (total_val - val) / (1 + interest_rate)
 		
 	def get_payment(self, current_date):
 		"""
@@ -43,7 +48,7 @@ class Loan():
 		Return : amount of money due, debtor and end.
 			- Amount of money due is the amount the debtor should pay to
 			the owner of the loan
-			- 
+			
 			- Debtor is the number of the agent who should pay this amount
 			- end is a boolean which says wether or not this loan can be deleted
 				from the database
@@ -56,30 +61,35 @@ class Loan():
 			"""
 			if current_date >= end_date:
 				
-				return value + (interest_rate) * value,
-					self.debtor,
+				return value + (interest_rate) * value,\
+					self.debtor,\
 					True
 
 			
+		if self.type == "household loan":
+			if current_date < end_date:
+				self.decrease_total_val(mensuality)
 
-           
-        if self.type == "household loan":
-            if current_date <= end_date:
-               
-				return self.remainig_val_with_interest -= mensuality,
-					   self.debtor,
-					   False
-                    
-            else:   
-                    
-                return self.remainig_val_with_interest,
-					   self.debtor,
-					   True
-                    
-                
-		   
-		
+				return mensuality,\
+					self.debtor,\
+					False
 
+			elif current_date == end_date:
+				self.decrease_total_val(mensuality)
+
+				return mensuality,\
+					self.debtor,\
+					total_val == 0
+
+			# Dans le cas où le prêt est arrivé à échéance mais qu'il reste à payer
+			elif total_val != 0:
+				return self.total_val,\
+					self.debtor,\
+					True
+
+			# Dans le cas où le prêt est entièrement payé
+			else:
+				return 0, self.debtor, True
 
 
 ###### Helper functions ######
