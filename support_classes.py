@@ -24,8 +24,8 @@ class Loan():
         self.nb_month = ((end_date.year - start_date.year)*12)+end_date.month - start_date.month 
         self.mensuality = value/nb_months + ((value/nb_month)*interest_rate)
         self.remaining_val_with_interest = mensuality*nb_month
-        
-
+                        
+            
 	def get_payment(self, current_date):
 		"""
 		This function will return hoow much money is due for this month
