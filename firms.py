@@ -43,3 +43,10 @@ class Firms(FinanceAgent):
 		by households directly.
 		"""
 		pass
+
+	def give_dividends(self):
+		"""
+		This function will give dividends to all bank who have share
+		"""
+		pass #Take of the word pass when completing the function
+		
