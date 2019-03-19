@@ -33,8 +33,8 @@ class Loan():
     	else:
     		super().__getattr__(name)
 
-    def __setattr__(self, name, value):
-    	pass
+    def set_total_val(self, value):
+    	self.value = value + value * interest_rate
         
 	def get_payment(self, current_date):
 		"""
