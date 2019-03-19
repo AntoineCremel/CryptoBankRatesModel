@@ -46,6 +46,8 @@ class WorldModel(Model):
 			a = Household(i + self.n_banks, self)
 			self.scheduler.add(a)
 
+		# If any deposits is to be given to banks it should be given now
+
 		# Create the data collector
 		self.datacollector = DataCollector(
 			model_reporters = {"Household liquidity": agent1_liquidity,

@@ -34,28 +34,6 @@ class Household(FinanceAgent):
 			# Receive salary
 			self.hours_worked_this_month = 0
 
-	# Helper functions
-	def get_account(self, bank):
-		"""
-		Return how much money this household has in bank n_bank
-		"""
-		if bank == self.bank_n:
-			return self.deposit
-
-	def charge_account(self, bank, amount, overdraft_allowed=False):
-		"""
-		Withdraw or add money to the account of this household with this bank.
-		"""
-		if bank != self.bank_n:
-			raise AttributeError("Having accounts in several different banks\
-				is not implemented")
-
-		# Check that the client has enough
-		if amount < 0 and -amount > self.deposit and not overdraft_allowed:
-			raise ValueError("Overdraft is not allowed")
-
-		self.deposit -= amount
-
 	def receive_salary(self):
 		"""
 		"""
