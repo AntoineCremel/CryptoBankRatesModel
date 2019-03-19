@@ -75,14 +75,25 @@ class WorldModel(Model):
 		elif name == "list_unemployed":
 			# Return a list containing the ids of all the employees who do not have
 			# a job
+
+			# This dictionary contains, for each household, the list of household it contains that
+			# does have a job
+			employed = dict.fromkeys(list(self.range_households), 0)
+
+			# Check how many jobs each household has
+			for f_id in self.range_firms:
+				for emp, __ in self.scheduler.agents[f_id].salaries.items:
+					employed[emp] += 1
+
+			# Then we loop through that dictionary, and for each household we add all
+			# of the remaining adults to the output list
 			unemployed = []
-			# Make a for that runs through the agents
-			for h_id in self.range_households:
-				# Check if that agent doth or doth not have a job
-				# by looping through the firms and checking their list of employees
-				for f_id in self.range_firms:
-					#for emp, sal in self.scheduler.agents[f_id].salary
-					pass
+			for household, number in employed:
+				unemployed_adults = self.scheduler.agents[household].n_adults - number
+				for i in range(unemployed_adults):
+					unemployed.add(household)
+
+			return unemployed
 
 		else:
 			super().__getattr__(name)
