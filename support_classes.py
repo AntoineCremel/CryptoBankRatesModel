@@ -36,7 +36,6 @@ class Loan():
     def __setattr__(self, name, value):
     	pass
         
-
 	def get_payment(self, current_date):
 		"""
 		This function will return hoow much money is due for this month
