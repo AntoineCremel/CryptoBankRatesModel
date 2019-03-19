@@ -5,14 +5,25 @@ the class for firms
 
 from financeAgent import FinanceAgent
 
+import random
+
 class Firms(FinanceAgent):
 	def __init__(self, unique_id, model):
 		super().__init__(unique_id, model)
 
-		self.employees = [] # list of numbers indicating employees to the firm
-		self.salaries = [] # list of salaries
+		self.salary_grid = [1200,1350,1500,1650,1800,2000,2300,2750,3600,5000] #Grid of salary
+		self.salaries = {} # dictionary with as key numero of employe and as value salary
 		self.deposit = 10000
 		### To complete : constructor of class firm
+
+	def init(self, nb_emp):
+		list_unemployed = self.model.list_unemployed
+		for i in range(nb_emp):
+			emp_to_hire = random.randint(0,len(list_unemployed)-1)
+			self.salaries[list_unemployed[emp_to_hire]] = self.salary_grid[random.randint(0, 9)]
+			list_unemployed.pop(emp_to_hire)
+			
+			
 
 	def step(self):
 		"""

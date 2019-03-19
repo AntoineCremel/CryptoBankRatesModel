@@ -58,8 +58,6 @@ class WorldModel(Model):
 
 		self.running = True
 
-		#Grid of salary
-		self.salaries_grid = [1200,1350,1500,1650,1800,2000,2300,2750,3600,5000]
 
 	def time_tick(self, before_datetime):
 		if before_datetime.day != self.current_datetime.day:
