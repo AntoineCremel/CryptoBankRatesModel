@@ -17,7 +17,7 @@ class Household(FinanceAgent):
 		self.n_adults = 1 #Number of adults capable of working in the household
 		self.deposit = 1000
 		self.price_of_life = 100 # Price of basic standard monthly consumption
-
+        self.teta = 0.1 # fixed proportion
 	def step(self):
 		"""
 		This function defines what a household will do on each
@@ -29,7 +29,8 @@ class Household(FinanceAgent):
 
 		self.receive_salary()
 		self.monthly_consumption()
-
+        self.taxes()
+        self.consumption()
 		if self.model.monthpassed:
 			# Receive salary
 			self.hours_worked_this_month = 0
@@ -71,3 +72,50 @@ class Household(FinanceAgent):
 		# later on, we will need to connect the consumption of a household with the
 		# income of production firms.
 		self.deposit -= self.price_of_life
+        
+    def taxes(self) :   
+        """
+        Taxes are levied in a fixed proportion teta
+        """
+        self.taxe = self.teta * self.deposit
+        
+    def consumption(self) :     
+        """
+        Households consume out of their disposable income
+        """
+        self.consumptiond = self.deposit - self.taxe
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
