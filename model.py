@@ -31,6 +31,7 @@ class WorldModel(Model):
 		self.step_interval = "month"
 
 		self.n_banks = n_agents['banks']
+		self.n_firms = n_agents['firms']
 		self.n_households = n_agents['households']
 
 		# Chose a scheduler
@@ -42,8 +43,12 @@ class WorldModel(Model):
 			a.liquidity = 1000
 			self.scheduler.add(a)
 
+		for i in range(self.n_firms):
+			a = Firm(i + self.n_banks, self)
+			self.scheduler.add(a)
+
 		for i in range(self.n_households):
-			a = Household(i + self.n_banks, self)
+			a = Household(i + self.n_banks + self.n_firms, self)
 			self.scheduler.add(a)
 
 		# If any deposits is to be given to banks it should be given now
@@ -60,6 +65,29 @@ class WorldModel(Model):
 
 		#Grid of salary
 		self.salaries_grid = [1200,1350,1500,1650,1800,2000,2300,2750,3600,5000]
+
+	def __getattr__(self, name):
+		if name == "range_households":
+			# This function returns a list with 2 numbers : the number of the
+			# first household in the list, and the number of the last household in the list
+			return range(n_banks + n_firms, n_banks + n_firms + n_households - 1)
+		elif name == "range_firms":
+			return range(n_banks, n_banks + n_firms - 1)
+
+		elif name == "list_unemployed":
+			# Return a list containing the ids of all the employees who do not have
+			# a job
+			unemployed = []
+			# Make a for that runs through the agents
+			for h_id in self.range_households:
+				# Check if that agent doth or doth not have a job
+				# by looping through the firms and checking their list of employees
+				for f_id in self.range_firms:
+					#for emp, sal in self.scheduler.agents[f_id].salary
+					pass
+
+		else:
+			super().__getattr__(name)
 
 	def time_tick(self, before_datetime):
 		if before_datetime.day != self.current_datetime.day:

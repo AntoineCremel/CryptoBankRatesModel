@@ -5,7 +5,7 @@ the class for firms
 
 from financeAgent import FinanceAgent
 
-class Firms(FinanceAgent):
+class Firm(FinanceAgent):
 	def __init__(self, unique_id, model):
 		super().__init__(unique_id, model)
 
