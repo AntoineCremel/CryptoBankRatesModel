@@ -38,8 +38,10 @@ class Household(FinanceAgent):
 			# Receive salary
 			self.hours_worked_this_month = 0
 
+
 	def receive_salary(self, wage):
 		"""
+		A modifier
 		"""
 		self.deposit += wage
 

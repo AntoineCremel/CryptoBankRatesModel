@@ -36,19 +36,15 @@ class Firm(FinanceAgent):
 		This function calls all the functions that should be executed each month
 		"""
 		self.give_salaries()
+		self.give_dividends()
 
 	def give_salaries(self):
 		"""
 		This function should give salaries to all the employees of the company
 		"""
-		pass # Take off the word pass when completing the function
+		for emp, salary in self.salaries.items():
+			self.agents[emp].receive_salary(salary)
 
-	def produce_goods(self):
-		"""
-		This function will generate consumption goods wchich can be bought
-		by households directly.
-		"""
-		pass
 
 	def give_dividends(self):
 		"""
