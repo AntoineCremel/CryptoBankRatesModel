@@ -38,8 +38,9 @@ class Household(FinanceAgent):
 			# Receive salary
 			self.hours_worked_this_month = 0
 
-	def receive_salary(self):
+	def receive_salary(self, amount):
 		"""
+		A modifier
 		"""
 		if self.model.monthpassed:
 			self.deposit += self.hours_worked_this_month * self.hour_wage
