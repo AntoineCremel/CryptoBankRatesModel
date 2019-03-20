@@ -95,3 +95,13 @@ class Bank(FinanceAgent):
 
 		for loan in loans_to_delete:
 			self.loans.remove(loan)
+
+	def give_loan(self, loan):
+		"""
+		This function receives an object of class loan, and decides wether or not to accept
+		it. If accpeted, it adds the loan to its list of loans
+		"""
+		#### A COMPLÉTER : CRITÈRES D'ACCEPTATION DU LOAN
+		self.loans.add(loan)
+		self.liquidity -= loan.value
+		loan.debtor.deposit += loan.value
