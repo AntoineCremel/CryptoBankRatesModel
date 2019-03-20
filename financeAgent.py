@@ -33,6 +33,8 @@ class FinanceAgent(Agent):
 		# this way anybody trying to modify deposit of finance agent
 		# will also modify the liquidity of the bank of finance agent
 		if name == "deposit":
+			if value < 0:
+				raise ValueError("Overdraft not allowed")
 			try:
 				self.model.scheduler.agents[self.bank_n].liquidity\
 					+= value - self.deposit
@@ -112,16 +114,16 @@ class FinanceAgent(Agent):
 		if bank == self.bank_n:
 			return self.deposit
 
-	def charge_account(self, bank, amount, overdraft_allowed=False):
+	def charge_account(self, amount, overdraft_allowed=False, bank=-1):
 		"""
 		Withdraw or add money to the account of this household with this bank.
 		"""
-		if bank != self.bank_n:
+		if bank != self.bank_n and bank != -1:
 			raise AttributeError("Having accounts in several different banks\
 				is not implemented")
 
 		# Check that the client has enough
-		if amount < 0 and -amount > self.deposit and not overdraft_allowed:
+		if amount > 0 and amount > self.deposit and not overdraft_allowed:
 			raise ValueError("Overdraft is not allowed")
 
 		self.deposit -= amount

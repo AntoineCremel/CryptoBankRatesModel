@@ -24,4 +24,4 @@ net_worth_agents_chart = ChartModule([{"Label": "Networth of household",
 server = ModularServer(WorldModel,
 	[net_worth_agents_chart, liquidity_agent0_chart],
 	"World model",
-	{"n_agents": {"banks": 1, "households": 1}})
+	{"n_agents": {"banks": 1, "households": 200, "firms": 1}})

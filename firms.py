@@ -16,13 +16,20 @@ class Firm(FinanceAgent):
 		### To complete : constructor of class firm
 
 	def init(self, nb_emp):
+		"""
+		This function takes as input nb_emp. It goes through the list of unemployed households,
+		and hires up to nb_emp or the number of unemployed left, whichever is smaller. It then
+		exits and returns the number of employees it could hire 
+		"""
 		list_unemployed = self.model.list_unemployed
 		for i in range(nb_emp):
+			if list_unemployed == []:
+				return i
 			emp_to_hire = random.randint(0,len(list_unemployed)-1)
 			self.salaries[list_unemployed[emp_to_hire]] = self.salary_grid[random.randint(0, 9)]
 			list_unemployed.pop(emp_to_hire)
 			
-			
+		return nb_emp
 
 	def step(self):
 		"""

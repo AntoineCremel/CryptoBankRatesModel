@@ -2,6 +2,7 @@ from mesa import Model
 from mesa.time import RandomActivation
 from household import Household
 from banks import Bank
+from firms import Firm
 from mesa.datacollection import DataCollector
 from datetime import datetime, timedelta
 import support_classes
@@ -52,25 +53,41 @@ class WorldModel(Model):
 			self.scheduler.add(a)
 
 		# If any deposits is to be given to banks it should be given now
+		# Init all firms with their employees
+
 
 		# Create the data collector
 		self.datacollector = DataCollector(
-			model_reporters = {"Household liquidity": agent1_liquidity,
-							"Household deposit": agent1_deposit,
+			model_reporters = {"Household liquidity": agent2_liquidity,
+							"Household deposit": agent2_deposit,
 							"Bank liquidity": agent0_liquidity,
-							"Networth of household": agent1_netWorth,
+							"Networth of household": agent2_netWorth,
 							"Networth of bank": agent0_netWorth})
 
 		self.running = True
+
+	def init_all_firms(self, proportion_unemployed=0):
+		"""
+		This function is designed to be called inside the constructor.
+		It runs through all the firms and initialises them
+		"""
+		nb_unemployed = len(self.list_unemployed)
+		nb_ppl_available_for_hire = nb_unemployed * (1 - proportion_unemployed)
+		for i in self.range_firms:
+			# Determine how many people this firm is allowed to hire 
+			# May add some randomness in here
+			will_hire = len(list(self.range_households)) / len(list(self.range_firms))
+
+			self.scheduler.agents[i].init(200)
 
 
 	def __getattr__(self, name):
 		if name == "range_households":
 			# This function returns a list with 2 numbers : the number of the
 			# first household in the list, and the number of the last household in the list
-			return range(n_banks + n_firms, n_banks + n_firms + n_households - 1)
+			return range(self.n_banks + self.n_firms, self.n_banks + self.n_firms + self.n_households - 1)
 		elif name == "range_firms":
-			return range(n_banks, n_banks + n_firms - 1)
+			return range(self.n_banks, self.n_banks + self.n_firms - 1)
 
 		elif name == "list_unemployed":
 			# Return a list containing the ids of all the employees who do not have
@@ -97,6 +114,7 @@ class WorldModel(Model):
 
 		else:
 			super().__getattr__(name)
+
 
 	def time_tick(self, before_datetime):
 		if before_datetime.day != self.current_datetime.day:
@@ -125,17 +143,17 @@ class WorldModel(Model):
 
 
 # Those functions are used to create graphs for the model
-def agent1_liquidity(model):
-	return model.scheduler.agents[1].liquidity
+def agent2_liquidity(model):
+	return model.scheduler.agents[2].liquidity
 
-def agent1_deposit(model):
-	return model.scheduler.agents[1].deposit
+def agent2_deposit(model):
+	return model.scheduler.agents[2].deposit
 
 def agent0_liquidity(model):
 	return model.scheduler.agents[0].liquidity
 
-def agent1_netWorth(model):
-	return model.scheduler.agents[1].net_worth
+def agent2_netWorth(model):
+	return model.scheduler.agents[2].net_worth
 
 def agent0_netWorth(model):
 	return model.scheduler.agents[0].net_worth
