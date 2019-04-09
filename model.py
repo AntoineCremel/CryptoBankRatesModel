@@ -54,7 +54,7 @@ class WorldModel(Model):
 
 		# If any deposits is to be given to banks it should be given now
 		# Init all firms with their employees
-
+		self.init_all_firms()
 
 		# Create the data collector
 		self.datacollector = DataCollector(
@@ -78,7 +78,7 @@ class WorldModel(Model):
 			# May add some randomness in here
 			will_hire = len(list(self.range_households)) / len(list(self.range_firms))
 
-			self.scheduler.agents[i].init(200)
+			self.scheduler.agents[i].init(will_hire)
 
 
 	def __getattr__(self, name):
@@ -105,10 +105,10 @@ class WorldModel(Model):
 			# Then we loop through that dictionary, and for each household we add all
 			# of the remaining adults to the output list
 			unemployed = []
-			for household, number in employed:
+			for household, number in employed.items():
 				unemployed_adults = self.scheduler.agents[household].n_adults - number
 				for i in range(unemployed_adults):
-					unemployed.add(household)
+					unemployed.append(household)
 
 			return unemployed
 

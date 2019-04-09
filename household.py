@@ -30,7 +30,6 @@ class Household(FinanceAgent):
 		# work hours as it expects every month.
 		self.hours_worked_this_month = self.n_work_hours_expected
 
-		self.receive_salary()
 		self.monthly_consumption()
 		self.consumption()
 		self.consumption_demand()
