@@ -62,7 +62,8 @@ class WorldModel(Model):
 							"Household deposit": agent2_deposit,
 							"Bank liquidity": agent0_liquidity,
 							"Networth of household": agent2_netWorth,
-							"Networth of bank": agent0_netWorth})
+							"Networth of bank": agent0_netWorth,
+							"Firm net worth": agent1_netWorth})
 
 		self.running = True
 
@@ -157,3 +158,6 @@ def agent2_netWorth(model):
 
 def agent0_netWorth(model):
 	return model.scheduler.agents[0].net_worth
+
+def agent1_netWorth(model):
+	return model.scheduler.agents[1].net_worth

@@ -85,7 +85,8 @@ class FinanceAgent(Agent):
 		else :
 			# If name is not one of the variable that we are trying to
 			# find then call the __getattr__ function of the mother class
-			super().__getattr__(name)
+			#super().__getattr__(name)
+			raise AttributeError
 
 	def step(self):
 		"""

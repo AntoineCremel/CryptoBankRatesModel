@@ -14,6 +14,8 @@ class Firm(FinanceAgent):
 		self.salaries = {} # dictionary with as key numero of employe and as value salary
 		self.deposit = 10000
 		### To complete : constructor of class firm
+		self.efficiency = 1.4
+		self.production = 0
 
 	def init(self, nb_emp):
 		"""
@@ -42,13 +44,17 @@ class Firm(FinanceAgent):
 		"""
 		This function should give salaries to all the employees of the company
 		"""
-		for emp, salary in self.salaries.items():
-			self.agents[emp].receive_salary(salary)
+		# Reset production
+		self.production = 0
 
+		for emp, salary in self.salaries.items():
+			self.liquidity -= salary
+			self.agents[emp].receive_salary(salary)
+			# Add the salary to the amount of production
+			self.production += efficiency * salary
 
 	def give_dividends(self):
 		"""
 		This function will give dividends to all bank who have share
 		"""
 		pass #Take of the word pass when completing the function
-		
